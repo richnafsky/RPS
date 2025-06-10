@@ -33,7 +33,7 @@ function findWinner(humanChoice, computerChoice){
 
     }
 
-?//function that plays the game//
+//function that plays the game//
 function playGame(){
     //determine base for user and computer score//
     let computerScore = 0;
