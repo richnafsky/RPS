@@ -1,67 +1,93 @@
+// create choice bank//
+
+const choices = ['rock', 'paper', 'scissors']
+
+
+
 // Function that returns computer's choice//
-function getComputerChoice(){
-    let computerSelection = Math.floor(Math.random() * 3);
-    
-    if (computerSelection == 0) {
-        computerSelection = 'rock'
-        
-    } else if (computerSelection == 1) {
-        computerSelection = 'papper'
-    }
-    else {
-        computerSelection = 'scissors'
-    }
-
-    return computerSelection;
-    }
-
-// define a variable that runs the funciton above for computer's choice//
-let computerChoice = getComputerChoice();
-
-// prints the computer's choice for the user to see//
-console.log(computerChoice)
-
-
-
-
-
-// Function that returns the user's choice//
 function getHumanChoice(){
-     let humanChoice = prompt("Rock, Papper, or Scissors?").toLowerCase();
-    return humanChoice
-}
+        return prompt("Rock, Papper, or Scissors?").toLowerCase();
+        
+    }
+// function that returns computer's choice
+function getComputerChoice(){
+        return choices[Math.floor(Math.random() * choices.length)];
+    }   
 
-// define a variable that runs the funciton above for user's choice//
-let humanChoice = getHumanChoice();
 
-
-
-// start a scoring system for each player//
-let humanScore = 0;
-let computerScore = 0;
 
 
 
 
 //funciton that returns who won the game//
-function playRound(){
+function findWinner(humanChoice, computerChoice){
+
     if (humanChoice == computerChoice) {
-        return 'Draw'
+        return 'draw'
     }
-    else if (humanChoice == 'papper' & computerChoice == 'rock') {
-        return 'You Win This Round!'
+    else if (humanChoice == 'paper' & computerChoice == 'rock' || 
+             humanChoice == 'rock' & computerChoice == 'scissors' || 
+             humanChoice == 'scissors' & computerChoice == 'paper') {
+        
+            return 'human'
     }
-    else if (humanChoice == 'rock' & computerChoice == 'scissors'){
-        return 'You Win This Round!'
-    }
-    else if (humanChoice == 'scissors' & computerChoice == 'paper') {
-        return 'You Win This Round!'
-    }
+    
     else {
-        return 'You Lose This Round...'
+        return 'computer'
+        }
+
     }
+
+
+
+
+
+
+    
+
+function playGame(){
+    let computerScore = 0;
+    let userScore = 0;
+    
+
+    for(let i = 0; i < 5; i++){
+        const humanChoice = getHumanChoice();
+        const computerChoice = getComputerChoice();
+        let winner = findWinner(humanChoice, computerChoice);
+        console.log(`Computer Choice: ${computerChoice} \nYour Choice: ${humanChoice}`)
+        
+
+        if (winner == 'draw'){
+            console.log('Draw...')
+            null
+        }
+        else if (winner == 'human'){
+            console.log('You Won This Round!')
+            userScore += 1;
+        }
+        else {
+            console.log('Computer won this round...')
+            computerScore += 1;
+        }
+        
+        console.log(computerScore);
+        console.log(userScore);
+        
+        
+        
+    }
+    if (userScore == computerScore){
+        console.log("It's a Draw ....")
+    }
+    else if (userScore > computerScore) {
+        console.log("You Won The Game!!!!")
+
+    }
+    else{
+        console.log("The Computer Won The Game.... Better Luck Next Time......")
+    }
+   console.log(`The Final Score is... \nUser: ${userScore} \nComputer: ${computerScore}`)
 }
 
 
-// starts a round of the game from the funciton above//
-console.log(playRound())
+playGame();
