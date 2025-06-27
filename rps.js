@@ -1,11 +1,19 @@
 // create choice bank//
 const choices = ['rock', 'paper', 'scissors']
 
+//creates a button using DOM for each user selection option
+const rockButton = document.querySelector('.rock')
+const paperButton = document.querySelector('.paper')
+const scissorsButton = document.querySelector('.scissors')
 
-// Function that returns computer's choice//
-function getHumanChoice(){
-        return prompt("Rock, Papper, or Scissors?").toLowerCase(); 
-    }
+//shows the outcome of the game
+const outcomeDiv = document.querySelector('.outcome')
+
+//starts a scoreboard
+let compScore = 0;
+let userScore = 0;
+
+
 
 
 // function that returns computer's choice
@@ -14,71 +22,72 @@ function getComputerChoice(){
     }   
 
 
-//funciton that returns who won the game//
-function findWinner(humanChoice, computerChoice){
 
-    if (humanChoice == computerChoice) {
-        return 'draw'
+// plays a round
+const playGame = (humanChoice, computerChoice) => {
+   
+    if (humanChoice === computerChoice) {
+        const p = document.createElement('p')
+        p.innerText = `Draw.... You both picked ${humanChoice}\n\nScore:\n Computer: ${compScore}\nUser: ${userScore}`
+        outcomeDiv.appendChild(p)
+
     }
-    else if (humanChoice == 'paper' & computerChoice == 'rock' || 
-             humanChoice == 'rock' & computerChoice == 'scissors' || 
-             humanChoice == 'scissors' & computerChoice == 'paper') {
-        
-            return 'human'
+    else if (humanChoice === 'rock' && computerChoice === 'scissors') {
+        userScore += 1
+        const p = document.createElement('p')
+        p.innerText = `You won! ${humanChoice} beats ${computerChoice}\n\nScore:\n Computer: ${compScore}\nUser: ${userScore}`
+        outcomeDiv.appendChild(p)
     }
-    
+    else if (humanChoice === 'paper' && computerChoice === 'rock') {
+        userScore += 1
+        const p = document.createElement('p')
+        p.innerText = `You won! ${humanChoice} beats ${computerChoice}\n\nScore:\n Computer: ${compScore}\nUser: ${userScore}`
+        outcomeDiv.appendChild(p)
+    }
+    else if (humanChoice === 'scissors' && computerChoice === 'paper') {
+        userScore += 1
+        const p = document.createElement('p')
+        p.innerText = `You won! ${humanChoice} beats ${computerChoice}\n\nScore:\n Computer: ${compScore}\nUser: ${userScore}`
+        outcomeDiv.appendChild(p)
+    }
     else {
-        return 'computer'
-        }
-
+        compScore +=1
+        const p = document.createElement('p')
+        p.innerText = `Computer Won.... ${computerChoice} beats ${humanChoice}\n\nScore:\n Computer: ${compScore}\nUser: ${userScore}`
+        outcomeDiv.appendChild(p)
     }
 
-//function that plays the game//
-function playGame(){
-    //determine base for user and computer score//
-    let computerScore = 0;
-    let userScore = 0;
-    
-//let the game play for 5 rounds//
-    for(let i = 0; i < 5; i++){
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
-        let winner = findWinner(humanChoice, computerChoice);
-        console.log(`Computer Choice: ${computerChoice} \nYour Choice: ${humanChoice}`)
-        
-//print out to tell user what their result is//
-        if (winner == 'draw'){
-            console.log('Draw...')
-            null
-        }
-        else if (winner == 'human'){
-            console.log('You Won This Round!')
-            userScore += 1;
-        }
-        else {
-            console.log('Computer won this round...')
-            computerScore += 1;
-        }
-        //prints the user and computer score//
-        console.log(computerScore);
-        console.log(userScore);    
-    }
-
-    //at end of 5 rounds, prints the final result for user//
-    if (userScore == computerScore){
-        console.log("It's a Draw ....")
-    }
-    else if (userScore > computerScore) {
-        console.log("You Won The Game!!!!")
-
-    }
-    else{
-        console.log("The Computer Won The Game.... Better Luck Next Time......")
-    }
-
-    //prints final score to the user//
-   console.log(`The Final Score is... \nUser: ${userScore} \nComputer: ${computerScore}`)
+    // first one to reach 5 is declared the winner
+    if (compScore === 5) {
+    const p = document.createElement('p')
+    p.innerText = `Computer Wins the Game.... ${compScore} to ${userScore}`
+    outcomeDiv.appendChild(p)
+}
+else if (userScore === 5) {
+    const p = document.createElement('p')
+    p.innerText = `You Won the Game.... ${userScore} to ${compScore}`
+    outcomeDiv.appendChild(p)
+}
 }
 
 
-playGame();
+
+
+// listens for rock button click from user and plays game with that seleciton //
+rockButton.addEventListener("click", () => {
+    const computerChoice = getComputerChoice();
+    const humanChoice = 'rock';
+    playGame(humanChoice, computerChoice)
+})
+// listens for paper button click from user and plays game with that seleciton //
+paperButton.addEventListener("click", () => {
+    const computerChoice = getComputerChoice();
+    const humanChoice = 'paper';
+    playGame(humanChoice, computerChoice)
+})
+// listens for scissors button click from user and plays game with that seleciton //
+scissorsButton.addEventListener("click", () => {
+    const computerChoice = getComputerChoice();
+    const humanChoice = 'scissors';
+    playGame(humanChoice, computerChoice)
+})
